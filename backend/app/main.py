@@ -59,3 +59,14 @@ def get_or_404(application_id: int) -> Application:
 @app.get("/")
 def root():
     return {"message": "Job Tracker API is running. Visit /docs to try it"}
+
+@app.get("/applications", response_model=list[Application])
+def list_applications(status: Status | None = None):
+    results = list(applications.values())
+    if status is not None:
+        results = [a for a in results if a.status == status]
+    return results
+
+@app.get("/applications/{application_id}", response_model=Application)
+def get_application(application_id: int):
+    return get_or_404(application_id)
