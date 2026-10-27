@@ -70,3 +70,24 @@ def list_applications(status: Status | None = None):
 @app.get("/applications/{application_id}", response_model=Application)
 def get_application(application_id: int):
     return get_or_404(application_id)
+
+@app.post("/applications", response_model=Application, status_code=status.HTTP_201_CREATED)
+def create_application(data: ApplicationCreate):
+    global next_id
+    application = Application(id=next_id, **data.model_dump())
+    applications[next_id] = application
+    next_id += 1
+    return application
+
+@app.patch("/applications/{application_id}", response_model=Application)
+def update_application(application_id: int, data: ApplicationUpdate):
+    application = get_or_404(application_id)
+    changes = data.model_dump(exclude_unset=True) # only fields the client actually sent
+    updated = application.model_copy(update=changes)
+    application[application_id] = updated
+    return updated
+
+@app.delete("/applications/{application_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_application(application_id: int):
+    get_or_404(application_id)
+    del applications[application_id]
