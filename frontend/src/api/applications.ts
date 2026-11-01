@@ -1,4 +1,9 @@
-import type { Application, ApplicationFilters } from "../types";
+import type {
+  Application,
+  ApplicationCreate,
+  ApplicationFilters,
+  ApplicationUpdate,
+} from "../types";
 
 const API_URL = "http://127.0.0.1:8000";
 
@@ -56,4 +61,31 @@ export function getApplications(
 
   const query = params.toString();
   return request<Application[]>(`/applications${query ? `?${query}` : ""}`);
+}
+
+export function getApplication(id: number): Promise<Application> {
+  return request<Application>(`/applications/${id}`);
+}
+
+export function createApplication(
+  data: ApplicationCreate,
+): Promise<Application> {
+  return request<Application>("/applications", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export function updateApplication(
+  id: number,
+  data: ApplicationUpdate,
+): Promise<Application> {
+  return request<Application>(`/applications/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export function deleteApplication(id: number): Promise<void> {
+  return request<void>(`/applications/${id}`, { method: "DELETE" });
 }
