@@ -16,6 +16,13 @@ export type Application = {
   notes: string | null;
 };
 
+export type ApplicationFilters = {
+  status?: Status;
+  company?: string;
+  sort?: "id" | "company" | "date_applied" | "status";
+  order?: "asc" | "desc";
+};
+
 export type ApplicationCreate = Omit<Application, "id">;
 
 export type ApplicationUpdate = Partial<ApplicationCreate>;
