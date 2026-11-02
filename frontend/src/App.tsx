@@ -1,3 +1,10 @@
+import ApplicationsPage from "./pages/ApplicationsPage";
+
 export default function App() {
-  return <h1>Job Tracker</h1>;
+  return (
+    <main>
+      <h1>Job Tracker</h1>
+      <ApplicationsPage />
+    </main>
+  );
 }
