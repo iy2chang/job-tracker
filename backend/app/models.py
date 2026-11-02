@@ -16,7 +16,7 @@ class ApplicationBase(SQLModel):
     role: str = Field(min_length=1, max_length=100)
     job_url: str | None = None
     status: Status = Field(default=Status.wishlist, index=True)
-    date_applied: str | None = None
+    date_applied: date | None = None
     location: str | None = None
     notes: str | None = None
 
@@ -30,6 +30,7 @@ class ApplicationCreate(ApplicationBase):
 
 class ApplicationPublic(ApplicationBase):
     """What the API sends back. id is always present here."""
+    id: int
 
 class ApplicationUpdate(SQLModel):
     """Every field optional, so the client can change just one thing."""
