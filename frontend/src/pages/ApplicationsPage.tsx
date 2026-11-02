@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getApplications } from "../api/applications";
 import ApplicationsTable from "../components/ApplicationsTable";
-import type { ApplicationFilters, Status } from "../types";
+import { STATUSES, type ApplicationFilters, type Status } from "../types";
 
 export default function ApplicationsPage() {
   const [filters, setFilters] = useState<ApplicationFilters>({
@@ -22,24 +22,52 @@ export default function ApplicationsPage() {
         <input
           placeholder="Search company..."
           value={filters.company ?? ""}
-          onChange={(e) => setFilters({ ...filters, company: e.target.value })}
+          onChange={(e) =>
+            setFilters((prev) => ({ ...prev, company: e.target.value }))
+          }
         />
         <select
           value={filters.status ?? ""}
           onChange={(e) =>
-            setFilters({
-              ...filters,
+            setFilters((prev) => ({
+              ...prev,
               status:
                 e.target.value === "" ? undefined : (e.target.value as Status),
-            })
+            }))
           }
         >
           <option value="">All statuses</option>
-          <option value="wishlist">Wishlist</option>
-          <option value="applied">Applied</option>
-          <option value="interviewing">Interviewing</option>
-          <option value="offer">Offer</option>
-          <option value="rejected">Rejected</option>
+          {STATUSES.map((s) => (
+            <option key={s.value} value={s.value}>
+              {s.label}
+            </option>
+          ))}
+        </select>
+        <select
+          value={filters.sort}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              sort: e.target.value as ApplicationFilters["sort"],
+            }))
+          }
+        >
+          <option value="date_applied">Sort by date applied</option>
+          <option value="company">Sort by company</option>
+          <option value="status">Sort by status</option>
+          <option value="id">Sort by date added</option>
+        </select>
+        <select
+          value={filters.order}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              order: e.target.value as ApplicationFilters["order"],
+            }))
+          }
+        >
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
         </select>
       </div>
 

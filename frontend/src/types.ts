@@ -23,6 +23,14 @@ export type ApplicationFilters = {
   order?: "asc" | "desc";
 };
 
+export const STATUSES: { value: Status; label: string }[] = [
+  { value: "wishlist", label: "Wishlist" },
+  { value: "applied", label: "Applied" },
+  { value: "interviewing", label: "Interviewing" },
+  { value: "offer", label: "Offer" },
+  { value: "rejected", label: "Rejected" },
+];
+
 export type ApplicationCreate = Omit<Application, "id">;
 
 export type ApplicationUpdate = Partial<ApplicationCreate>;
