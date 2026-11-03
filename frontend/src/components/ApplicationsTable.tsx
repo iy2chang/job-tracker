@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { Application } from "../types";
 import StatusBadge from "./StatusBadge";
 
@@ -26,7 +27,9 @@ export default function ApplicationsTable({
       <tbody>
         {applications.map((app) => (
           <tr key={app.id}>
-            <td>{app.company}</td>
+            <td>
+              <Link to={`/applications/${app.id}`}>{app.company}</Link>
+            </td>
             <td>{app.role}</td>
             <td>
               <StatusBadge status={app.status} />

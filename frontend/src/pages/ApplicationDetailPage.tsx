@@ -25,6 +25,28 @@ export default function ApplicationDetailPage() {
   return (
     <section>
       <Link to="/">← All applications</Link>
+      <h2>{application.company}</h2>
+      <p>{application.role}</p>
+      <dl className="details">
+        <dt>Status</dt>
+        <dd>
+          <StatusBadge status={application.status} />
+        </dd>
+        <dt>Location</dt>
+        <dd>{application.location ?? "-"}</dd>
+        <dt>Job posting</dt>
+        <dd>
+          {application.job_url ? (
+            <a href={application.job_url} target="_blank" rel="noreferrer">
+              {application.job_url}
+            </a>
+          ) : (
+            "-"
+          )}
+        </dd>
+        <dt>Notes</dt>
+        <dd>{application.notes || "-"}</dd>
+      </dl>
     </section>
   );
 }
