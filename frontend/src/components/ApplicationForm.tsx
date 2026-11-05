@@ -91,16 +91,17 @@ export default function ApplicationForm({
         />
       </label>
       <label>
-        Status *
-        <input
-          name="status"
-          value={values.status}
-          onChange={handleChange}
-          required
-        />
+        Status
+        <select name="status" value={values.status} onChange={handleChange}>
+          <option value="wishlist">Wishlist</option>
+          <option value="applied">Applied</option>
+          <option value="interviewing">Interviewing</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+        </select>
       </label>
       <label>
-        Date Applied *
+        Date Applied
         <input
           name="date_applied"
           value={values.date_applied}
@@ -108,7 +109,7 @@ export default function ApplicationForm({
         />
       </label>
       <label>
-        Location *
+        Location
         <input
           name="location"
           value={values.location}
@@ -116,11 +117,11 @@ export default function ApplicationForm({
         />
       </label>
       <label>
-        Job Url *
+        Job Url
         <input name="job_url" value={values.job_url} onChange={handleChange} />
       </label>
       <label>
-        Notes *
+        Notes
         <input name="notes" value={values.notes} onChange={handleChange} />
       </label>
 
