@@ -3,6 +3,7 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getApplications } from "../api/applications";
 import ApplicationsTable from "../components/ApplicationsTable";
 import { STATUSES, type ApplicationFilters, type Status } from "../types";
+import { Link } from "react-router";
 
 export default function ApplicationsPage() {
   const [filters, setFilters] = useState<ApplicationFilters>({
@@ -18,6 +19,7 @@ export default function ApplicationsPage() {
 
   return (
     <section>
+      <Link to="/new">+ Add application</Link>
       <div className="filters">
         <input
           placeholder="Search company..."
@@ -70,7 +72,6 @@ export default function ApplicationsPage() {
           <option value="asc">Ascending</option>
         </select>
       </div>
-
       {isPending && <p>Loading...</p>}
       {error && (
         <p className="error">Couldn't load applications: {error.message}</p>
