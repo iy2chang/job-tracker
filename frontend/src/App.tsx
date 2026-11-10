@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router";
+import { NavLink, Route, Routes } from "react-router";
 import ApplicationsPage from "./pages/ApplicationsPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import NewApplicationPage from "./pages/NewApplicationPage";
@@ -8,7 +8,13 @@ export default function App() {
   return (
     <>
       <header className="header">
-        <Link to="/">Job Tracker</Link>
+        <span className="logo">Job Tracker</span>
+        <nav className="nav">
+          <NavLink to="/" end>
+            List
+          </NavLink>
+          <NavLink to="/board">Board</NavLink>
+        </nav>
       </header>
       <main>
         <Routes>
