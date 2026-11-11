@@ -7,7 +7,11 @@ type ApplicationCardProps = {
 
 export default function ApplicationCard({ application }: ApplicationCardProps) {
   return (
-    <Link to={`/applications/${application.id}`} className="card">
+    <Link
+      to={`/applications/${application.id}`}
+      className="card"
+      draggable={false}
+    >
       <strong>{application.company}</strong>
       <span>{application.role}</span>
       {application.location && (
