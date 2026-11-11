@@ -185,3 +185,18 @@ main {
 .column-rejected {
   background: #f9eef0;
 }
+.draggable {
+  touch-action: none;
+  cursor: grab;
+}
+.draggable.dragging {
+  opacity: 0.4;
+}
+.column-over {
+  outline: 2px dashed #2f5bea;
+  outline-offset: -2px;
+}
+.drag-overlay .card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: grabbing;
+}
