@@ -63,9 +63,29 @@ export default function BoardPage() {
   const moveMutation = useMutation({
     mutationFn: ({ id, status }: MoveVariables) =>
       updateApplication(id, { status }),
-    onSuccess: (_updated, { id }) => {
+
+    onMutate: async ({ id, status }) => {
+      // cancel refetch in progress os it doesn't overwrite with the old data
+      await queryClient.cancelQueries({ queryKey: BOARD_KEY });
+      // save the previous data from cache
+      const previous = queryClient.getQueryData<Application[]>(BOARD_KEY);
+      // update the cache with the new data
+      queryClient.setQueryData<Application[]>(BOARD_KEY, (old) =>
+        old?.map((app) => (app.id === id ? { ...app, status } : app)),
+      );
+
+      return { previous };
+    },
+
+    onError: (_error, _variables, onMutateResult) => {
+      if (onMutateResult?.previous) {
+        queryClient.setQueryData(BOARD_KEY, onMutateResult.previous);
+      }
+    },
+
+    onSettled: (_date, _error, { id }) => {
       queryClient.invalidateQueries({ queryKey: ["applications"] });
-      queryClient.invalidateQueries({ queryKey: ["application", id] });
+      queryClient.invalidateQueries({ queryKey: ["applicaiton", id] });
     },
   });
 
