@@ -16,3 +16,12 @@ def list_events(application_id: int, session: SessionDep):
         .order_by(col(Event.event_date).desc(), col(Event.id).desc())
     )
     return session.exec(statement).all()
+
+@router.post("/applications/{application_id}/events", response_model=EventPublic, status_code=201)
+def create_event(application_id: int, data: EventCreate, session: SessionDep):
+    get_or_404(session, application_id)
+    event = Event.model_validate(data, update={"application_id": application_id})
+    session.add(event)
+    session.commit()
+    session.refresh(event)
+    return event
